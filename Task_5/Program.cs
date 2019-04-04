@@ -32,11 +32,12 @@ namespace Task_5 {
         /// <param name="n">Количество строк/столбцов</param>
         /// <param name="type">Тип ввода</param>
         private static double[][] FillingMatrix(int n, int type = 0) {
+            Random rnd = new Random();
             double[][] fullMatrix = new double[n][];
             if (type == 0) { // рандом
                 for (int i = 0; i < n; i++) {
                     for (int j = 0; j < n; j++) {
-                        Random rnd = new Random();
+                        
                         fullMatrix[i][j] = Math.Round(rnd.Next(1, 100) + rnd.NextDouble(), 2);
                     }
                 }
