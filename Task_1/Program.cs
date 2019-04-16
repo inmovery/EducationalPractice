@@ -26,16 +26,22 @@ namespace Task_1 {
             int[] xmax = new int[256];// координата x правых верхних углов
             int[] ymax = new int[256];// координата y правых верхних углов
 
+
             for (int i = 1; i <= k; i++){
                 xmin[i] = m;
                 ymin[i] = n;
             }
 
             int c = 0;
+            int d = 0;//для проверки покрытых прямоугольников
+            int count = 0;//количество занятых клеток
             for (int y = n; y >= 1; y--) {
                 for (int x = 1; x <= m; x++) {
                     int j = Convert.ToInt32(pre[c]);// значение ячейки в матрице
+                    
                     if (j > 0) {
+                        d = j;
+                        count++;
                         if (x < xmin[j]) xmin[j] = x;
                         if (y < ymin[j]) ymin[j] = y;
 
@@ -46,13 +52,14 @@ namespace Task_1 {
                 }
             }
 
-            if(!init.Contains("1")) writer.WriteLine("0 0 " + m + " " + n);
-            else {
             for (int i = 1; i <= k; i++) {
+                if (xmin[i] == m && ymin[i] == n && xmax[i] == 0 && ymax[i] == 0 && count == 1) {
+                    writer.WriteLine((xmin[d] - 1) + " " + (ymin[d] - 1) + " " + xmax[d] + " " + ymax[d]);
+                } else {
                     writer.WriteLine((xmin[i] - 1) + " " + (ymin[i] - 1) + " " + xmax[i] + " " + ymax[i]);
                 }
             }
-            
+
             writer.Close();
             reader.Close();
         }
