@@ -28,13 +28,14 @@ namespace Task_6 {
             InputInteger(ref M, "Введите M: ");
             InputDouble(ref L, "Введите L: ");
 
+            // подсчёт времени на N членов последовательности
             one_case.Start();
             for (int i = 3; i < N; i++) {
                 sequence[i] = Math.Round(getSequenceValue(sequence, i),2);
             }
             one_case.Stop();
             
-            // вычисление количества возможных ч.п. в случае с первыми M ч.п., которые больше L
+            // подсчёт времени на M членов последовательности
             two_case.Start();
             int c = 0;
             for (int i = 3; i < M; i++) {
@@ -45,6 +46,11 @@ namespace Task_6 {
             }
             two_case.Stop();
 
+            // если поиск M членов последователности быстрее
+            if (two_case.ElapsedMilliseconds < one_case.ElapsedMilliseconds) {
+                sequence = SearchM();
+            }
+
             // вывод последовательности
             for (int i = 0; i < sequence.Length; i++) {
                 if (sequence[i] != 0)
@@ -52,6 +58,25 @@ namespace Task_6 {
             }
 
             Console.ReadKey();
+        }
+
+        /// <summary>
+        /// Поиск первых M членов последовательности, которые больше L
+        /// </summary>
+        /// <returns></returns>
+        private static double[] SearchM() {
+            double[] second = new double[3 + M];
+            int c = 0;
+            for (int i = 3; i < M + 3; i++) {
+                double temp = getSequenceValue(sequence, i);
+                if (temp > L) {
+                    if (c <= M) {
+                        second[i] = temp;
+                        c++;
+                    } else break;
+                }
+            }
+            return second;
         }
 
         /// <summary>
