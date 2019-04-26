@@ -38,24 +38,27 @@ namespace Task_6 {
             // подсчёт времени на M членов последовательности
             two_case.Start();
             int c = 0;
-            for (int i = 3; i < M; i++) {
-                if (getSequenceValue(sequence, i) > L) {
+            int d = 0;
+            while (c != M) {
+                if (getSequenceValue(sequence, d) > L) {
                     if (c <= M) c++;
                     else break;
                 }
+                d++;
             }
             two_case.Stop();
 
             // если поиск M членов последователности быстрее
             if (two_case.ElapsedMilliseconds < one_case.ElapsedMilliseconds) {
                 sequence = SearchM();
+                Console.WriteLine("Поиск M членов послед. быстрее на {0} миллисекунд", one_case.ElapsedMilliseconds - two_case.ElapsedMilliseconds);
+            } else { // если подсчёт N членов последовательности быстрее
+                Console.WriteLine("Подсчёт N членов послед. быстрее на {0} миллисекунд", two_case.ElapsedMilliseconds - one_case.ElapsedMilliseconds);
             }
 
             // вывод последовательности
-            for (int i = 0; i < sequence.Length; i++) {
-                if (sequence[i] != 0)
-                    Console.WriteLine("{0} ч.п. = {1}", i + 1, sequence[i]);
-            }
+            for (int i = 0; i < sequence.Length; i++)
+                Console.WriteLine("{0} ч.п. = {1}", i + 1, sequence[i]);
 
             Console.ReadKey();
         }
@@ -66,15 +69,20 @@ namespace Task_6 {
         /// <returns></returns>
         private static double[] SearchM() {
             double[] second = new double[3 + M];
-            int c = 0;
-            for (int i = 3; i < M + 3; i++) {
-                double temp = getSequenceValue(sequence, i);
+            second[0] = sequence[0];
+            second[1] = sequence[1];
+            second[2] = sequence[2];
+            int c = 0; // проверка для M
+            int d = 0; // счётчик 
+            while (c != M) {
+                double temp = getSequenceValue(sequence, d);
                 if (temp > L) {
                     if (c <= M) {
-                        second[i] = temp;
+                        second[c + 3] = temp;
                         c++;
                     } else break;
                 }
+                d++;
             }
             return second;
         }
@@ -126,6 +134,7 @@ namespace Task_6 {
             do {
                 string buf = Console.ReadLine();
                 ok = int.TryParse(buf, out init);
+                if (init <= 0) ok = false;
                 if (!ok) {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.Write("Неаправильный ввод! Введите снова: ");
