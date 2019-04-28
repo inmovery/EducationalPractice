@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Task_6 {
-    class Program {
+    public class Program {
 
         // для проверки скорости выполнения операций
         private static Stopwatch one_case = new Stopwatch();
@@ -18,7 +18,7 @@ namespace Task_6 {
 
         private static double[] sequence; // итоговая последовательность
 
-        static void Main(string[] args) {
+        private static void Main(string[] args) {
             InputInteger(ref N, "Введите N: ");
             sequence = new double[N];
             InputDouble(ref sequence[0], "Введите a1: ");
