@@ -7,6 +7,10 @@
 *.userosscache
 *.sln.docstates
 
+#For majority my friends
+[Tt]ask_8/
+[Tt]est_1/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
