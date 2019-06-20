@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+        
 namespace Task_7 {
     public class Program {
 
@@ -34,7 +34,7 @@ namespace Task_7 {
         }
 
         /// <summary>
-        /// Проверка того, подходит ли следующее осчетание
+        /// Проверка того, подходит ли следующее сочетание
         /// </summary>
         /// <param name="a"></param>
         /// <param name="n"></param>

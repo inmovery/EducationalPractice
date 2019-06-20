@@ -82,7 +82,7 @@ namespace Task_9 {
                             ShowListTwo(second);
                             break;
                         case 2: // рандом
-                            int len_for = rnd_for.Next(5, 25);
+                            int len_for = rnd_for.Next(5, 300);
                             second = MakeListTwo(len_for);
                             ShowListTwo(second);
                             break;
@@ -165,7 +165,7 @@ namespace Task_9 {
             if (t != null) {
                 count_items_list++;
                 FindCountItemsByRecurs(t.next);//переход к следующему элементу списка
-            } 
+            }
         }
 
         /// <summary>

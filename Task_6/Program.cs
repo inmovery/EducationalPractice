@@ -55,7 +55,7 @@ namespace Task_6 {
             } else { // если подсчёт N членов последовательности быстрее
                 Console.WriteLine("Подсчёт N членов послед. быстрее на {0} миллисекунд", two_case.ElapsedMilliseconds - one_case.ElapsedMilliseconds);
             }
-
+            
             // вывод последовательности
             for (int i = 0; i < sequence.Length; i++)
                 Console.WriteLine("{0} ч.п. = {1}", i + 1, sequence[i]);

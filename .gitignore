@@ -7,8 +7,7 @@
 *.userosscache
 *.sln.docstates
 
-#For majority my friends
-[Tt]ask_8/
+#Delete folder contains information for testss
 [Tt]est_1/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
