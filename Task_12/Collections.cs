@@ -6,25 +6,26 @@ using System.Threading.Tasks;
 
 namespace Task_12 {
     public class Collections {
-        // Массивы - упорядоченный по возрастанию, по убыванию, не упорядоченный
-        int[] SortedInc;
-        int[] SortedDec;
-        int[] Unsorted;
+        
+        int[] SortedInc; // упорядоченный по возрастанию массив
+        int[] SortedDec; // упорядоченный по убыванию массив
+        int[] Unsorted; // неупорядоченный массив
 
-        #region Generation
         // ДСЧ, используемый при генерации массивов
         static Random rnd = new Random();
 
         // Конструктор
-        public Collections(int Size = 100) {
+        public Collections(int Size) {
             SortedInc = GenerateSortedArray(Size, 1);
             SortedDec = GenerateSortedArray(Size, -1);
             Unsorted = GenerateArray(Size);
         }
 
-        // Метод для получения массивов
-        // Переменная Order определяет порядок упорядочивания элементов массива: 
-        // 1 - по возрастанию, -1 - по убыванию, 0 или любое другое число - не упорядоченный
+        /// <summary>
+        /// Получение массивов
+        /// </summary>
+        /// <param name="Order">Определитель порядка упорядочивания элементов (1 => по возрастанию, -1 => по убыванию, 0 => не упорядоченный)</param>
+        /// <returns></returns>
         public int[] GetArray(int Order) {
             switch (Order) {
                 case 1:
@@ -36,8 +37,12 @@ namespace Task_12 {
             }
         }
 
-        // Генерация упорядоченного массива
-        // Переменная Order определяет порядок упорядочивания элементов массива: 1 - по возрастанию, -1 - по убыванию
+        /// <summary>
+        /// Генерация упорядоченного массива
+        /// </summary>
+        /// <param name="Size">Размерность массива</param>
+        /// <param name="Order">Порядок упорядочивания (1 => по возрастанию, -1 => по убыванию)</param>
+        /// <returns></returns>
         int[] GenerateSortedArray(int Size, int Order) {
             int[] Array = new int[Size];
             Array[0] = rnd.Next(10);
@@ -53,14 +58,15 @@ namespace Task_12 {
                 Array[i] = rnd.Next(-1000, 1000);
             return Array;
         }
-        #endregion Generation
 
-        #region Sort
         // Длины промежутков для сортировки
         // Использована последовательность Марцина Циура, считающаяся лучшим вариантом для массивов длиной менее 4000
         static int[] Increment = new int[] { 1, 4, 10, 23, 57, 132, 301, 701, 1750 };
 
-        // Сортировка Шелла
+        /// <summary>
+        /// Сортировка Шелла
+        /// </summary>
+        /// <param name="Array">Результирующий массив</param>
         public static void SortShell(ref int[] Array) {
             // Счетчики сравнений и перестановок
             int ComparesCounter = 0, ReplacesCounter = 0;
@@ -69,22 +75,19 @@ namespace Task_12 {
             while (Increment[step] < Array.Length)
                 step++;
 
-            // Начинаем сортировку
             while (step >= 0) {
-                // Инкремент
+                
                 int increm = Increment[step];
                 // Проход по циклу
                 for (int i = 0; i < Array.Length - increm; i++) {
-                    // Вспомогательная переменная для прохода по циклу
-                    int j = i;
+                    int j = i; // помощь при проходе по циклу
                     // Пока не дойдем до начала массива и текущий элемент больше находящегося на расстоянии шага
                     while (j >= 0 && Array[j] > Array[j + increm]) {
                         // Переставляем элемент местами
                         int temp = Array[j];
                         Array[j] = Array[j + increm];
                         Array[j + increm] = temp;
-                        // Переходим к следующему элементу
-                        j--;
+                        j--; // Переходим к следующему элементу
                         // Обновляем счетчики
                         ComparesCounter++;
                         ReplacesCounter++;
@@ -96,14 +99,21 @@ namespace Task_12 {
                 step--;
             }
 
-            // Выводим результаты сортировки:
+            // Выводим результаты сортировки
             Console.WriteLine("Отсортированный методом Шелла массив:");
             PrintArray(Array);
-            Console.WriteLine("При сортировке массива было выполнено {0} сравнений и {1} перестановок.\n", ComparesCounter, ReplacesCounter);
+            Console.WriteLine("При сортировке массива было выполнено {0} сравнений и {1} перестановки(-вок).\n", ComparesCounter, ReplacesCounter);
         }
 
-        // Быстрая сортировка
         // Для реализации было выбрано разбиение Хоара
+        /// <summary>
+        /// Быстрая сортировка
+        /// </summary>
+        /// <param name="Array"></param>
+        /// <param name="IndexFirst"></param>
+        /// <param name="IndexLast"></param>
+        /// <param name="ComparesCount"></param>
+        /// <param name="ReplacesCount"></param>
         public static void QuickSort(ref int[] Array, int IndexFirst, int IndexLast, ref int ComparesCount, ref int ReplacesCount) {
             if (IndexFirst > IndexLast)
                 return;
@@ -137,9 +147,11 @@ namespace Task_12 {
                 QuickSort(ref Array, i + 1, IndexLast, ref ComparesCount, ref ReplacesCount);
             }
         }
-        #endregion Sort
 
-        // Печать массива
+        /// <summary>
+        /// Вывод массива
+        /// </summary>
+        /// <param name="Array"></param>
         public static void PrintArray(int[] Array) {
             foreach (int Item in Array)
                 Console.Write("{0} ", Item);

@@ -355,8 +355,11 @@ namespace Task_8 {
             }
         }
 
-
-        // добавление ребра в список смежности
+        /// <summary>
+        /// добавление ребра в список смежности
+        /// </summary>
+        /// <param name="n1">Номер первой вершины</param>
+        /// <param name="n2">Номер второй вершины</param>
         private void addEdge(int n1, int n2) {
             BiconnectedComponentsFinder.edgeList[n1].Add(n2);
             BiconnectedComponentsFinder.numEdges++;
@@ -527,7 +530,7 @@ namespace Task_8 {
         /// <param name="e"></param>
         private void button5_Click(object sender, EventArgs e) {
 
-            List<Color> colors = new List<Color>(10);
+            List<Color> colors = new List<Color>(20);
             colors.Add(System.Drawing.ColorTranslator.FromHtml("#686fe3"));
             colors.Add(Color.Green);
             colors.Add(Color.Blue);
@@ -538,20 +541,34 @@ namespace Task_8 {
             colors.Add(Color.Blue);
             colors.Add(Color.Magenta);
             colors.Add(Color.Yellow);
-            
+            colors.Add(System.Drawing.ColorTranslator.FromHtml("#686fe3"));
+            colors.Add(Color.Green);
+            colors.Add(Color.Blue);
+            colors.Add(Color.Magenta);
+            colors.Add(Color.Yellow);
+            colors.Add(System.Drawing.ColorTranslator.FromHtml("#686fe3"));
+            colors.Add(Color.Green);
+            colors.Add(Color.Blue);
+            colors.Add(Color.Magenta);
+            colors.Add(Color.Yellow);
+
             field.clearSheet();
             Pen edgeBlocks;
-            for (int i = 0; i < BiconnectedComponentsFinder.blocks.Count; i++) {
-                edgeBlocks = new Pen(colors[i]);
-                for (int j = 0; j < BiconnectedComponentsFinder.blocks[i].Count; j++) { // взяли номера рёб
-                    int[] h = BiconnectedComponentsFinder.blocks[i][j].Split(',').Select(x => int.Parse(x)).ToArray();
-                    //((PictureBox)sender).Refresh();
-                    //Graphics g = ((PictureBox)sender).CreateGraphics();
-                    //g.SmoothingMode = SmoothingMode.AntiAlias;
-                    //g.DrawLine(edgeBlocks, vertices[h[0] - 1].x, vertices[h[0] - 1].y, vertices[h[1] - 1].x, vertices[h[1] - 1].y);
-                    field.RedrawEdge(vertices[h[0]-1], vertices[h[1]-1], edges[edges.Count - 1], i, edgeBlocks);
-                    sheet.Image = field.GetBitmap();
+            try {
+                for (int i = 0; i < BiconnectedComponentsFinder.blocks.Count; i++) {
+                    edgeBlocks = new Pen(colors[i]);
+                    for (int j = 0; j < BiconnectedComponentsFinder.blocks[i].Count; j++) { // взяли номера рёб
+                        int[] h = BiconnectedComponentsFinder.blocks[i][j].Split(',').Select(x => int.Parse(x)).ToArray();
+                        //((PictureBox)sender).Refresh();
+                        //Graphics g = ((PictureBox)sender).CreateGraphics();
+                        //g.SmoothingMode = SmoothingMode.AntiAlias;
+                        //g.DrawLine(edgeBlocks, vertices[h[0] - 1].x, vertices[h[0] - 1].y, vertices[h[1] - 1].x, vertices[h[1] - 1].y);
+                        field.RedrawEdge(vertices[h[0] - 1], vertices[h[1] - 1], edges[edges.Count - 1], i, edgeBlocks);
+                        sheet.Image = field.GetBitmap();
+                    }
                 }
+            } catch {
+                MessageBox.Show("Ошибка! Введено слишком много рёбер! Удалите ребро(-ра)!");
             }
 
             //field.RedrawALLGraph(vertices, edges, BiconnectedComponentsFinder.blocks[0]); // перекрас рёбер

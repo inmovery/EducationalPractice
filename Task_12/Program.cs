@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task_12 {
     class Program {
         static void Main(string[] args) {
-            // Создание трех массивов длиной 100
-            Collections col = new Collections();
-            // Вспомогательные переменные для работы с массивами
-            int[] ArrInc = col.GetArray(1);
-            int[] ArrDec = col.GetArray(-1);
-            int[] ArrUns = col.GetArray(0);
+
+            Console.Write("Какой размерностью будет массив: ");
+            int size = getSimpleInput();// разрмерность массивов
+            Collections col = new Collections(size);
+            
+            int[] ArrInc = col.GetArray(1); // упорядоченный по возрастанию массив
+            int[] ArrDec = col.GetArray(-1); // упорядоченный по убыванию массив
+            int[] ArrUns = col.GetArray(0); // неупорядоченный массив
 
             Console.WriteLine("Упорядоченный по возрастанию массив:");
             Collections.PrintArray(ArrInc);
@@ -36,6 +35,7 @@ namespace Task_12 {
             ArrUns = col.GetArray(0);
 
             Console.WriteLine("Быстрая сортировка:");
+
             // Счетчики сравнений и перестановок
             int ComparesCounter = 0, ReplacesCounter = 0;
 
@@ -56,8 +56,49 @@ namespace Task_12 {
             Collections.PrintArray(ArrUns);
             Console.WriteLine("При сортировке массива было выполнено {0} сравнений и {1} перестановок.\n", ComparesCounter, ReplacesCounter);
 
-            Console.WriteLine("Нажмите любую клавишу...");
             Console.ReadKey();
         }
+
+        /// <summary>
+        /// Ввод для менюшки с ограничением ввода
+        /// </summary>
+        /// <param name="n">Огрничение по вводу</param>
+        /// <returns></returns>
+        private static int getSettingInput(int n) {
+            bool ok = true;
+            int temp = 0;
+            do {
+                string buf = Console.ReadLine();
+                ok = int.TryParse(buf, out temp);
+                if (!ok || temp < 0 || temp > n) {
+                    ok = false;
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write("Неверный ввод! Введие корректные данные: ");
+                    Console.ResetColor();
+                }
+            } while (!ok);
+            return temp;
+        }
+
+        /// <summary>
+        /// Обычный ввод для менюшки (> 0)
+        /// </summary>
+        /// <returns></returns>
+        private static int getSimpleInput() {
+            bool ok = true;
+            int temp = 0;
+            do {
+                string buf = Console.ReadLine();
+                ok = int.TryParse(buf, out temp);
+                if (!ok || temp < 0) {
+                    ok = false;
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write("Неверный ввод! Введие корректные данные: ");
+                    Console.ResetColor();
+                }
+            } while (!ok);
+            return temp;
+        }
+
     }
 }
