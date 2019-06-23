@@ -5,19 +5,27 @@ namespace Task_4 {
         private static void Main(string[] args) {
             // ввод
             Console.Write("Введите n:");
-            int n = InputInteger();
+            int n = InputInteger(); // степень и нижний индекс
 
             Console.Write("Введите x:");
-            double x = InputDouble();
+            double x = InputDouble(); // действительная часть комплексного числа
             Console.Write("Введите y:");
-            double y = InputDouble();
-            
+            double y = InputDouble(); // коэффициент при мнемой части комплексного числа
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("———————————————————————————————————————————————————————————");
+            Console.WriteLine("| Введите коэфициенты для i многочлена [ a(n) + b(n)i ] |");
+            Console.ResetColor();
+
             double[] a = new double[n+1];
             double[] b = new double[n+1];
             for (int i = n; i >= 0; i--) {
-                Console.Write("Введите a[{0}] : ", i);
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("———————————————————————————————————————————————————————————");
+                Console.ResetColor();
+                Console.Write("Введите a({0}) = ", i);
                 a[i] = InputDouble();
-                Console.Write("Введите b[{0}] : ", i);
+                Console.Write("Введите b({0}) = ", i);
                 b[i] = InputDouble();
             }
             Complex result = new Complex(a[0],b[0]);
@@ -25,10 +33,34 @@ namespace Task_4 {
                 Complex temp = (new Complex(a[i], b[i])) * Complex.Pow(new Complex(x, y), i);
                 result += temp;
             }
-            Console.WriteLine("Ответ: " + result.ToString());
-            Console.ReadKey();
 
-        } 
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            // проверки и усовершенствование вывода результата
+            if (result.ToString() == "0 + 0i") {
+                Console.WriteLine("Ответ: 0");
+            }
+            if (result.Imaginary > 0) {
+                if (result.ToString().Split('+')[0].Trim() == "0" && result.ToString().Split('+')[1].Trim() != "0i") {
+                    Console.WriteLine("Ответ: " + result.Imaginary + "i");
+                } else if (result.ToString().Split('+')[1].Trim() == "0i" && result.ToString().Split('+')[0].Trim() != "0") {
+                    Console.WriteLine("Ответ: " + result.Real);
+                } else {
+                    Console.WriteLine("Ответ: {0}", result.ToString());
+                }
+            } else {
+                if (result.ToString().Split('-')[0].Trim() == "0" && result.ToString().Split('-')[1].Trim() != "0i") {
+                    Console.WriteLine("Ответ: " + result.Imaginary + "i");
+                } else if (result.ToString().Split('-')[1].Trim() == "0i" && result.ToString().Split('-')[0].Trim() != "0") {
+                    Console.WriteLine("Ответ: " + result.Real);
+                } else {
+                    Console.WriteLine("Ответ: {0}", result.ToString());
+                }
+            }
+            Console.ResetColor();
+            Console.ReadKey();
+            
+        }
 
         /// <summary>
         /// Ввод действительных чисел
@@ -165,6 +197,11 @@ namespace Task_4 {
         /// <returns></returns>
         public static Complex Log(Complex a) { return new Complex(Math.Log(Abs(a)), Arg(a)); }
 
+        /// <summary>
+        /// Аргумент для подсчёта логарифма комплексного числа
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
         public static double Arg(Complex a) {
             if (a.Real < 0) {
                 if (a.Imaginary < 0) return Math.Atan(a.Imaginary / a.Real) - Math.PI;
@@ -175,7 +212,12 @@ namespace Task_4 {
         /// <summary>
         /// Вывод комплекных чисел
         /// </summary>
-        public override string ToString() { return string.Format("{0} + {1}i", Real, Imaginary); }
+        public override string ToString() {
+            if(Imaginary < 0)
+                return string.Format("{0} - {1}i", Real, (-1)*Imaginary);
+            else
+                return string.Format("{0} + {1}i", Real, Imaginary);
+        }
 
     }
 

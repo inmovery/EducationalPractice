@@ -11,10 +11,8 @@ namespace Task_12 {
         int[] SortedDec; // упорядоченный по убыванию массив
         int[] Unsorted; // неупорядоченный массив
 
-        // ДСЧ, используемый при генерации массивов
         static Random rnd = new Random();
 
-        // Конструктор
         public Collections(int Size) {
             SortedInc = GenerateSortedArray(Size, 1);
             SortedDec = GenerateSortedArray(Size, -1);
@@ -51,7 +49,11 @@ namespace Task_12 {
             return Array;
         }
 
-        // Генерация неупорядоченного массива
+        /// <summary>
+        /// Генерация неупорядоченного массива
+        /// </summary>
+        /// <param name="Size">Размерность массива</param>
+        /// <returns></returns>
         int[] GenerateArray(int Size) {
             int[] Array = new int[Size];
             for (ushort i = 0; i < Size; i++)
@@ -102,7 +104,7 @@ namespace Task_12 {
             // Выводим результаты сортировки
             Console.WriteLine("Отсортированный методом Шелла массив:");
             PrintArray(Array);
-            Console.WriteLine("При сортировке массива было выполнено {0} сравнений и {1} перестановки(-вок).\n", ComparesCounter, ReplacesCounter);
+            Console.WriteLine("При сортировке массива было выполнено {0} сравнений(-я) и {1} перестановки(-вок).\n", ComparesCounter, ReplacesCounter);
         }
 
         // Для реализации было выбрано разбиение Хоара

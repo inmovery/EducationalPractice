@@ -142,7 +142,7 @@ namespace Task_8 {
         /// <param name="V2">Вторая вершина</param>
         /// <param name="edge">Ребро</param>
         /// <param name="numberE">Номер ребра</param>
-        public void RedrawEdge(Vertex V1, Vertex V2, Edge edge, int numberE, Pen edgeBlock) {
+        public void RedrawEdge(Vertex V1, Vertex V2, int one, int two, Edge edge, Pen edgeBlock) {
 
             gr.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -151,12 +151,12 @@ namespace Task_8 {
             if (edge.v1 == edge.v2) {
                 gr.DrawArc(edgeBlock, (V1.x - 2 * R), (V1.y - 2 * R), 2 * R, 2 * R, 90, 270);
                 point = new PointF(V1.x - (int)(2.75 * R), V1.y - (int)(2.75 * R));
-                drawVertex(V1.x, V1.y, (edge.v1 + 1).ToString());
+                drawVertex(V1.x, V1.y, one.ToString());
             } else {
                 gr.DrawLine(edgeBlock, V1.x, V1.y, V2.x, V2.y);
                 point = new PointF((V1.x + V2.x) / 2, (V1.y + V2.y) / 2);
-                drawVertex(V1.x, V1.y, (edge.v1 + 1).ToString());
-                drawVertex(V2.x, V2.y, (edge.v2 + 1).ToString());
+                drawVertex(V1.x, V1.y, one.ToString());
+                drawVertex(V2.x, V2.y, two.ToString());
             }
         }
 
@@ -248,11 +248,15 @@ namespace Task_8 {
         public static int dfscounter, compcounter, numPoints;
         public static string comp, points;
 
-        // находит точки сочленения
+        /// <summary>
+        /// Поиск точек сочленения
+        /// </summary>
+        /// <param name="v"></param>
         public static void findArticulationPoints(Vertex v) {
 
             v.dfsNum = ++dfscounter; // у каждой вершины свой порядковый номер посещения в обходе в глубину
-            v.low = v.dfsNum; //low - минимальный номер среди всех вершин, смежных с v и с теми вершинами, в которые мы пришли по пути, проходящем через v.
+            v.low = v.dfsNum; //low - минимальный номер среди всех вершин, смежных с v и с теми вершинами, 
+                              //в которые мы пришли по пути, проходящем через v.
 
             // Depth First Search - поиск в глубину
             int vNum = vertices.IndexOf(v);
@@ -272,7 +276,7 @@ namespace Task_8 {
                         // для вывода компонент
                         points += "  " + vNum;
                         numPoints++;
-                        comp = "Компоненты " + (compcounter + 1) + ": {";
+                        comp = "Компонента " + (compcounter + 1) + ": {";
                         blocks.Add(new List<string>());
                         // находит двусвязные компоненты
                         biconnectedComponent(v, x);
@@ -290,8 +294,11 @@ namespace Task_8 {
             }
         }
 
-
-        // поиск двусвязных компонент графа по точкам сочленения
+        /// <summary>
+        /// поиск двусвязных компонент графа по точкам сочленения
+        /// </summary>
+        /// <param name="v">Вершина для входа при поиске в глубину</param>
+        /// <param name="x">Вершина для обработки</param>
         private static void biconnectedComponent(Vertex v, Vertex x) {
 
             int xNum = vertices.IndexOf(x); // порядковый номер первой вершины
@@ -299,7 +306,8 @@ namespace Task_8 {
                 return;
             }
 
-            List<int> xList = edgeList[xNum]; // получаем список(массив) номеров вершин с которыми вершина х имеет ребро (смежные вершины для х)
+            // получаем список(массив) номеров вершин с которыми вершина х имеет ребро (смежные вершины для х)
+            List<int> xList = edgeList[xNum];
 
             for (int i = 0; i < xList.Count; i++) {
                 int x1 = xList[i]; // номер i-той смежной вершины

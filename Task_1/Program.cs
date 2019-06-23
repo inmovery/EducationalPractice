@@ -16,28 +16,27 @@ namespace Task_1 {
 
             string[] pre = init.Split(' ');
 
-            int n = Convert.ToInt32(sett[0]);// количество строк
-            int m = Convert.ToInt32(sett[1]);// количество столбцов
-            int k = Convert.ToInt32(sett[2]);// количество прямоугольников
+            int n = Convert.ToInt32(sett[0]); // количество строк
+            int m = Convert.ToInt32(sett[1]); // количество столбцов
+            int k = Convert.ToInt32(sett[2]); // количество прямоугольников
 
-            int[] xmin = new int[256];// координата x левых нижних углов
-            int[] ymin = new int[256];// координата y левых нижних углов
+            int[] xmin = new int[256]; // координата x левых нижних углов
+            int[] ymin = new int[256]; // координата y левых нижних углов
 
-            int[] xmax = new int[256];// координата x правых верхних углов
-            int[] ymax = new int[256];// координата y правых верхних углов
-
-
+            int[] xmax = new int[256]; // координата x правых верхних углов
+            int[] ymax = new int[256]; // координата y правых верхних углов
+            
             for (int i = 1; i <= k; i++){
                 xmin[i] = m;
                 ymin[i] = n;
             }
 
             int c = 0;
-            int d = 0;//для проверки покрытых прямоугольников
-            int count = 0;//количество занятых клеток
+            int d = 0; // для проверки покрытых прямоугольников
+            int count = 0; // количество занятых клеток
             for (int y = n; y >= 1; y--) {
                 for (int x = 1; x <= m; x++) {
-                    int j = Convert.ToInt32(pre[c]);// значение ячейки в матрице
+                    int j = Convert.ToInt32(pre[c]); // значение ячейки в матрице
                     
                     if (j > 0) {
                         d = j;
@@ -53,6 +52,7 @@ namespace Task_1 {
             }
 
             for (int i = 1; i <= k; i++) {
+                // если это единичная клетка, которая покрывает другую
                 if (xmin[i] == m && ymin[i] == n && xmax[i] == 0 && ymax[i] == 0 && count == 1) {
                     writer.WriteLine((xmin[d] - 1) + " " + (ymin[d] - 1) + " " + xmax[d] + " " + ymax[d]);
                 } else {

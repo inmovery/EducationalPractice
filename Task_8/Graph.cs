@@ -10,24 +10,15 @@ namespace Task_8 {
 
         public List<string> result = new List<string>();
 
-        // Количество вершин графа
-        int Rows;
-        // Количество ребер графа
-        int Columns;
-        // Граф задается матрицей инциденций
-        int[,] IncidenceMatrix;
-        // Количество блоков
-        int Blocks;
-        // Количество обследованных вершин
-        int CheckedCount;
-        // Порядковые номера обхода вершин
-        int[] Checked;
-        // Стек с номерами ребер, составляющими блок
-        Stack<int> EdgesStack;
-        // Список уже использованных ребер
-        List<int> UsedEdges;
+        int Rows; // Количество вершин графа
+        int Columns; // Количество ребер графа
+        int[,] IncidenceMatrix; // Матрица инциденций
+        int Blocks; // Количество блоков
+        int CheckedCount; // Количество обследованных вершин
+        int[] Checked; // Порядковые номера обхода вершин
+        Stack<int> EdgesStack; // Стек с номерами ребер, составляющими блокы
+        List<int> UsedEdges; // Список уже использованных ребер
 
-        // Конструктор
         public Graph(int Rows, int Columns, int[,] Matrix) {
             this.Rows = Rows;
             this.Columns = Columns;
@@ -42,7 +33,10 @@ namespace Task_8 {
             UsedEdges = new List<int>(Columns);
         }
 
-        // Чтение графа из файла
+        /// <summary>
+        /// Чтение графа из файла
+        /// </summary>
+        /// <returns></returns>
         public static Graph ReadGraph() {
             try {
                 //FileStream File = new FileStream("C:/Users/clay.DESKTOP-JFB7SPD/Desktop/Учебная практика/EducationalPractice/Task_8-2/bin/Debug/input.txt", FileMode.Open);
@@ -79,48 +73,56 @@ namespace Task_8 {
             }
         }
 
-        // Выделение блоков графа методом поиска в глубину
+        /// <summary>
+        /// Выделение блоков графа методом поиска в глубину
+        /// </summary>
         public void Block() {
             CheckedCount = 0;
             DFS(0, -1);
         }
 
-        // Поиск в глубину
+        /// <summary>
+        /// Поиск в глубину
+        /// </summary>
+        /// <param name="Pos">Позиция вершины</param>
+        /// <param name="Parent">ТО, из какой вершины пришли</param>
+        /// <returns></returns>
         int DFS(int Pos, int Parent) {
             Checked[Pos] = ++CheckedCount;
-            // Minim - минимальное расстояние от Pos до входа
-            int Minim = Checked[Pos];
+
+            int Minim = Checked[Pos]; // минимальное расстояние от Pos до входа
+
             // Перебор всех ребер, входящих или исходящих из вершины Pos
             for (int Edge = 0; Edge < Columns; Edge++) {
                 if (IncidenceMatrix[Pos, Edge] == 1) {
                     int NextVerit = 0;
                     while (NextVerit < Rows && IncidenceMatrix[NextVerit, Edge] == 0 || NextVerit == Pos)
                         NextVerit++;
-                    {
-                        if (NextVerit != Parent) {
-                            int t, cur_size = EdgesStack.Count;
-                            // Если этого ребра еще нет в стеке
-                            if (!UsedEdges.Contains(Edge)) {
-                                UsedEdges.Add(Edge);
-                                EdgesStack.Push(Edge);
-                            }
 
-                            //Если вершина еще не посещена
-                            if (Checked[NextVerit] == 0) {
-                                // Продолжаем обход из этой вершины
-                                t = DFS(NextVerit, Pos);
-                                if (t >= Checked[Pos]) {
-                                    //++Child;
-                                    string res = "Блоку " + ++Blocks + " принадлежат ребра: ";
-                                    while (EdgesStack.Count != cur_size) {
-                                        res += ((char)('a' + EdgesStack.Pop()) + ", ");
-                                    }
-                                    result.Add(res);
-                                }
-                            } else
-                                t = Checked[NextVerit];
-                            Minim = Math.Min(Minim, t);
+                    if (NextVerit != Parent) {
+
+                        int t, cur_size = EdgesStack.Count;
+
+                        // Если этого ребра еще нет в стеке
+                        if (!UsedEdges.Contains(Edge)) {
+                            UsedEdges.Add(Edge);
+                            EdgesStack.Push(Edge);
                         }
+
+                        //Если вершина еще не посещена
+                        if (Checked[NextVerit] == 0) {
+                            // Продолжаем обход из этой вершины
+                            t = DFS(NextVerit, Pos);
+                            if (t >= Checked[Pos]) {
+                                string res = "Блоку " + ++Blocks + " принадлежат ребра: ";
+                                while (EdgesStack.Count != cur_size) {
+                                    res += ((char)('a' + EdgesStack.Pop()) + ", ");
+                                }
+                                result.Add(res);
+                            }
+                        } else
+                            t = Checked[NextVerit];
+                        Minim = Math.Min(Minim, t);
                     }
                 }
             }

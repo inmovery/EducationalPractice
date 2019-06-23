@@ -457,11 +457,12 @@ namespace Task_8 {
         /// <param name="e"></param>
         private void button4_Click(object sender, EventArgs e) {
 
+            // Заполнение матрицы инциденций
             IMatrix = new int[vertices.Count, edges.Count];
             field.fillIncidenceMatrix(vertices.Count, edges, IMatrix);
 
             listBoxMatrix.Items.Clear();
-            // Чтение графа из файла
+            // Создание графа
             Graph graph = new Graph(vertices.Count, edges.Count, IMatrix);
 
             // Если удалось прочитать граф
@@ -482,7 +483,15 @@ namespace Task_8 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e) {
+            SearchForEdges();
+            listBoxMatrix.Items.Add("Количество блоков: " + BiconnectedComponentsFinder.compcounter);
+            listBoxMatrix.Items.Add("Количество точек сочленения: " + BiconnectedComponentsFinder.compcounter);
+            foreach (string s in BiconnectedComponentsFinder.components) {
+                listBoxMatrix.Items.Add(s);
+            }
+        }
 
+        private void SearchForEdges() {
             BiconnectedComponentsFinder.dfscounter = 0; // Счетчик
             BiconnectedComponentsFinder.compcounter = 0; // Число двусвязных комонент
             BiconnectedComponentsFinder.numPoints = 0; // Число точек сочленения
@@ -495,12 +504,8 @@ namespace Task_8 {
 
             listBoxMatrix.Items.Clear();
             BiconnectedComponentsFinder.findArticulationPoints(BiconnectedComponentsFinder.vertices[0]);
-            listBoxMatrix.Items.Add("Количество блоков: " + BiconnectedComponentsFinder.compcounter);
-            listBoxMatrix.Items.Add("Количество точек сочленения: " + BiconnectedComponentsFinder.compcounter);
-            foreach (string s in BiconnectedComponentsFinder.components) {
-                listBoxMatrix.Items.Add(s);
-            }
         }
+
 
         /// <summary>
         /// Тест (Составление списка смежности)
@@ -529,7 +534,7 @@ namespace Task_8 {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void button5_Click(object sender, EventArgs e) {
-
+            SearchForEdges();
             List<Color> colors = new List<Color>(20);
             colors.Add(System.Drawing.ColorTranslator.FromHtml("#686fe3"));
             colors.Add(Color.Green);
@@ -559,11 +564,7 @@ namespace Task_8 {
                     edgeBlocks = new Pen(colors[i]);
                     for (int j = 0; j < BiconnectedComponentsFinder.blocks[i].Count; j++) { // взяли номера рёб
                         int[] h = BiconnectedComponentsFinder.blocks[i][j].Split(',').Select(x => int.Parse(x)).ToArray();
-                        //((PictureBox)sender).Refresh();
-                        //Graphics g = ((PictureBox)sender).CreateGraphics();
-                        //g.SmoothingMode = SmoothingMode.AntiAlias;
-                        //g.DrawLine(edgeBlocks, vertices[h[0] - 1].x, vertices[h[0] - 1].y, vertices[h[1] - 1].x, vertices[h[1] - 1].y);
-                        field.RedrawEdge(vertices[h[0] - 1], vertices[h[1] - 1], edges[edges.Count - 1], i, edgeBlocks);
+                        field.RedrawEdge(vertices[h[0] - 1], vertices[h[1] - 1], h[0], h[1], edges[edges.Count - 1], edgeBlocks);
                         sheet.Image = field.GetBitmap();
                     }
                 }
@@ -571,7 +572,6 @@ namespace Task_8 {
                 MessageBox.Show("Ошибка! Введено слишком много рёбер! Удалите ребро(-ра)!");
             }
 
-            //field.RedrawALLGraph(vertices, edges, BiconnectedComponentsFinder.blocks[0]); // перекрас рёбер
             sheet.Image = field.GetBitmap();
         }
     }

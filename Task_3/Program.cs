@@ -21,7 +21,7 @@ namespace Task_3 {
             bool y3 = x <= 1;
             bool y4 = y >= -2;
 
-            //вычисление результата
+            // вычисление результата
             if (y1 && y2 && y3 && y4) {
                 Console.Write("Точка ");
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -35,8 +35,7 @@ namespace Task_3 {
                 Console.ResetColor();
                 Console.WriteLine(" в заштрихованную область");
             }
-
-
+            
             // проверка на продолжение
             Console.WriteLine("1. Продолжить\n2. Закончить\n");
             int input = 0;
@@ -85,8 +84,8 @@ namespace Task_3 {
                 ok = double.TryParse(text, out result);
                 if (!ok) {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine("Ошибка. Неверный ввод!");
-                    Console.Write("Введите повторно : ");
+                    Console.WriteLine("Вы ввели некорректные данные!");
+                    Console.Write("Введите действительное число : ");
                     Console.ResetColor();
                 }
             } while (!ok);

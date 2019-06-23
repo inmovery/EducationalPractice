@@ -6,9 +6,6 @@ using System.Windows.Forms;
 
 namespace Task_8 {
     static class Program {
-        /// <summary>
-        /// Главная точка входа для приложения.
-        /// </summary>
         [STAThread]
         static void Main() {
             Application.EnableVisualStyles();

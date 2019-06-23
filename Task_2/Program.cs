@@ -9,8 +9,8 @@ namespace Task_2 {
             
             string[] init = reader.ReadToEnd().Split();
             
-            int n = Convert.ToInt32(init[0]);
-            int m = Convert.ToInt32(init[1]);
+            int m = Convert.ToInt32(init[0]);
+            int n = Convert.ToInt32(init[1]);
             int r = m + n;
             int p = 0;
             while (n > 0) {
