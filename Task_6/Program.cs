@@ -32,17 +32,17 @@ namespace Task_6 {
             // проверка на продолжение
             Console.WriteLine("————————————————————");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("1. Продолжить\n2. Закончить\n");
+            Console.WriteLine("1. Продолжить\n2. Очистить консоль и продолжить\n3. Закончить\n");
             Console.ResetColor();
             int input = 0;
             bool ok = true;
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write("Команда: ");
             Console.ResetColor();
             do {
                 string buf = Console.ReadLine();
                 ok = int.TryParse(buf, out input);
-                if (input > 2 || input <= 0)
+                if (input > 3 || input <= 0)
                     ok = false;
                 if (!ok) {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -56,14 +56,16 @@ namespace Task_6 {
 
             switch (input) {
                 case 1:
+                    MainAction();
+                    break;
+                case 2:
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine("Консоль очищена!");
                     Console.ResetColor();
-                    InitVars();
                     MainAction();
                     break;
-                case 2:
+                case 3:
                     Environment.Exit(1);
                     break;
                 default:
@@ -75,13 +77,13 @@ namespace Task_6 {
         }
 
         private static void InitVars() {
-            InputInteger(ref N, "Введите количество элементов N : ");
+            InputIntegerForN(ref N, "Введите количество элементов N : ");
             sequence = new double[N];
             InputDouble(ref sequence[0], "Введите a1: ");
             InputDouble(ref sequence[1], "Введите a2: ");
             InputDouble(ref sequence[2], "Введите a3: ");
 
-            InputInteger(ref M, "Введите количество элементов M : ");
+            InputIntegerForM(ref M, "Введите количество элементов M : ");
             InputDouble(ref L, "Введите значение L (минимум для M): ");
         }
 
@@ -168,8 +170,8 @@ namespace Task_6 {
         /// <summary>
         /// Вычисление последовательности рекурсией
         /// </summary>
-        /// <param name="seq">последовательность</param>
-        /// <param name="input">номер элемента в последовательности</param>
+        /// <param name="seq">Последовательность</param>
+        /// <param name="input">Номер элемента в последовательности</param>
         /// <returns></returns>
         private static double getSequenceValue(double[] seq, int input) {
             if (input == 0)
@@ -181,12 +183,12 @@ namespace Task_6 {
             else
                 return ((7/3)*getSequenceValue(seq, input-1) + getSequenceValue(seq, input - 2))/(2* getSequenceValue(seq, input - 3));
         }
-        
+
         /// <summary>
         /// Воод не целых данных
         /// </summary>
-        /// <param name="init"></param>
-        /// <param name="splash"></param>
+        /// <param name="init">куда будет записываться</param>
+        /// <param name="splash">Вступление (текст)</param>
         private static void InputDouble(ref double init, string splash) {
             bool ok = true;
             Console.Write(splash);
@@ -202,20 +204,41 @@ namespace Task_6 {
         }
 
         /// <summary>
-        /// Воод целых данных
+        /// Воод числа N
         /// </summary>
-        /// <param name="init"></param>
-        /// <param name="splash"></param>
-        private static void InputInteger(ref int init, string splash) {
+        /// <param name="init">куда будет записываться</param>
+        /// <param name="splash">Вступление (текст)</param>
+        private static void InputIntegerForN(ref int init, string splash) {
             bool ok = true;
             Console.Write(splash);
             do {
                 string buf = Console.ReadLine();
                 ok = int.TryParse(buf, out init);
-                if (init < 3) ok = false;
+                if (init <= 2) ok = false;
                 if (!ok) {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.Write("Неверный ввод!\nВведите целое число > 2 : ");
+                    Console.ResetColor();
+                }
+            } while (!ok);
+        }
+
+        /// <summary>
+        /// Ввод числа M
+        /// </summary>
+        /// <param name="init">куда будет записываться</param>
+        /// <param name="splash">Вступление (текст)</param>
+        private static void InputIntegerForM(ref int init, string splash) {
+            bool ok = true;
+            Console.Write(splash);
+            do {
+                string buf = Console.ReadLine();
+                ok = int.TryParse(buf, out init);
+                if (init <= 0)
+                    ok = false;
+                if (!ok) {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.Write("Неверный ввод!\nВведите целое число > 0 : ");
                     Console.ResetColor();
                 }
             } while (!ok);

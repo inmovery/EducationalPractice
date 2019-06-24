@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using System.Text.RegularExpressions;
 
 namespace Task_11 {
     class Program {
@@ -35,13 +30,19 @@ namespace Task_11 {
         /// <returns></returns>
         static string ConsoleInput() {
             string res;
-            Regex regex = new Regex("[0|1]*"); // ввод только нулей и единиц 
-
-            bool ok;
+            
+            bool ok = true;
             do {
                 Console.WriteLine("Введите сообщение, которое хотите обработать: ");
                 res = Console.ReadLine();
-                ok = regex.IsMatch(res);
+                for (int i = 0; i < res.Length; i++) {
+                    if (res[i] != '0' && res[i] != '1') {
+                        ok = false;
+                        break;
+                    } else {
+                        ok = true;
+                    }
+                }
                 if (!ok)
                     Console.WriteLine("Сообщение должно содержать только 0 и 1.");
             } while (!ok);
@@ -215,7 +216,7 @@ namespace Task_11 {
                 if (!ok || temp < 0 || temp > n) {
                     ok = false;
                     Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write("Ошибка! Введие праквильные данные: ");
+                    Console.Write("Неверный воод! Введите целое число > 0 : ");
                     Console.ResetColor();
                 }
             } while (!ok);
@@ -235,7 +236,7 @@ namespace Task_11 {
                 if (!ok || temp < 0) {
                     ok = false;
                     Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write("Ошибка! Введие праквильные данные: ");
+                    Console.Write("Неверный ввод! Введите корректные данные: ");
                     Console.ResetColor();
                 }
             } while (!ok);

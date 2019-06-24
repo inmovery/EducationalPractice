@@ -3,6 +3,11 @@
 namespace Task_4 {
     public class Program {
         private static void Main(string[] args) {
+            MainAction();
+        }
+
+        private static void MainAction() {
+
             // ввод
             Console.Write("Введите n:");
             int n = InputInteger(); // степень и нижний индекс
@@ -17,8 +22,8 @@ namespace Task_4 {
             Console.WriteLine("| Введите коэфициенты для i многочлена [ a(n) + b(n)i ] |");
             Console.ResetColor();
 
-            double[] a = new double[n+1];
-            double[] b = new double[n+1];
+            double[] a = new double[n + 1];
+            double[] b = new double[n + 1];
             for (int i = n; i >= 0; i--) {
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("———————————————————————————————————————————————————————————");
@@ -28,7 +33,7 @@ namespace Task_4 {
                 Console.Write("Введите b({0}) = ", i);
                 b[i] = InputDouble();
             }
-            Complex result = new Complex(a[0],b[0]);
+            Complex result = new Complex(a[0], b[0]);
             for (int i = n; i > 0; i--) {
                 Complex temp = (new Complex(a[i], b[i])) * Complex.Pow(new Complex(x, y), i);
                 result += temp;
@@ -58,8 +63,50 @@ namespace Task_4 {
                 }
             }
             Console.ResetColor();
-            Console.ReadKey();
-            
+
+            // проверка на продолжение
+            Console.WriteLine("————————————————————");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("1. Продолжить\n2. Очистить консоль и продолжить\n3. Закончить\n");
+            Console.ResetColor();
+            int input = 0;
+            bool ok = true;
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write("Команда: ");
+            Console.ResetColor();
+            do {
+                string buf = Console.ReadLine();
+                ok = int.TryParse(buf, out input);
+                if (input > 3 || input <= 0)
+                    ok = false;
+                if (!ok) {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("Такой команды не существует!");
+                    Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write("Команда: ");
+                    Console.ResetColor();
+                }
+            } while (!ok);
+
+            switch (input) {
+                case 1:
+                    MainAction();
+                    break;
+                case 2:
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("Консоль очищена!");
+                    Console.ResetColor();
+                    MainAction();
+                    break;
+                case 3:
+                    Environment.Exit(1);
+                    break;
+                default:
+                    // additional feature
+                    break;
+            }
         }
 
         /// <summary>

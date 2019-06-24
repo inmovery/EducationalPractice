@@ -130,6 +130,7 @@ namespace Task_12 {
                     ComparesCount++;
                     i++;
                 }
+
                 while (Array[j] > Pivot) {
                     ComparesCount++;
                     j--;

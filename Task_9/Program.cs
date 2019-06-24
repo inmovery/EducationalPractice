@@ -24,7 +24,7 @@ namespace Task_9 {
         private static void LinkedListTwo() {
             bool ok;
             int input;
-            Console.WriteLine("1. Создать список\n2. Подсчитать рекурсией\n3. Подсчитать БЕЗ рекурсии\n4. Очистить консоль\n5. Выход");
+            Console.WriteLine("1. Создать список\n2. Посчитать рекурсией\n3. Посчитать БЕЗ рекурсии\n4. Очистить консоль\n5. Выход");
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write("Команда: ");
             do {
@@ -82,7 +82,7 @@ namespace Task_9 {
                             ShowListTwo(second);
                             break;
                         case 2: // рандом
-                            int len_for = rnd_for.Next(5, 300);
+                            int len_for = rnd_for.Next(5, 20);
                             second = MakeListTwo(len_for);
                             ShowListTwo(second);
                             break;
@@ -164,7 +164,7 @@ namespace Task_9 {
             TwoList t = sec;
             if (t != null) {
                 count_items_list++;
-                FindCountItemsByRecurs(t.next);//переход к следующему элементу списка
+                FindCountItemsByRecurs(t.next); // переход к следующему элементу списка
             }
         }
 

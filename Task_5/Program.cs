@@ -71,16 +71,19 @@ namespace Task_5 {
             Console.WriteLine("Максимальный элемент ({0}, {1}) = {2}", x, y, Max);
 
             // проверка на продолжение
-            Console.WriteLine("1. Продолжить\n2. Закончить\n");
+            Console.WriteLine("—————————————————————————————————————");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("1. Продолжить\n2. Очистить консоль и продолжить\n3. Закончить\n");
+            Console.ResetColor();
             int input = 0;
             bool ok = true;
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write("Команда: ");
             Console.ResetColor();
             do {
                 string buf = Console.ReadLine();
                 ok = int.TryParse(buf, out input);
-                if (input > 2 || input <= 0)
+                if (input > 3 || input <= 0)
                     ok = false;
                 if (!ok) {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -94,13 +97,16 @@ namespace Task_5 {
 
             switch (input) {
                 case 1:
+                    MainAction();
+                    break;
+                case 2:
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine("Консоль очищена!");
                     Console.ResetColor();
                     MainAction();
                     break;
-                case 2:
+                case 3:
                     Environment.Exit(1);
                     break;
                 default:

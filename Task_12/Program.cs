@@ -73,7 +73,7 @@ namespace Task_12 {
                 if (!ok || temp < 0 || temp > n) {
                     ok = false;
                     Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write("Неверный ввод! Введие корректные данные: ");
+                    Console.Write("Неверный ввод! Введие целое число > {0}: ", n);
                     Console.ResetColor();
                 }
             } while (!ok);
@@ -93,7 +93,7 @@ namespace Task_12 {
                 if (!ok || temp < 0) {
                     ok = false;
                     Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.Write("Неверный ввод! Введие корректные данные: ");
+                    Console.Write("Неверный ввод! Введите целое число > 0: ");
                     Console.ResetColor();
                 }
             } while (!ok);

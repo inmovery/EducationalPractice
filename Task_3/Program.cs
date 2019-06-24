@@ -24,29 +24,33 @@ namespace Task_3 {
             // вычисление результата
             if (y1 && y2 && y3 && y4) {
                 Console.Write("Точка ");
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("входит");
                 Console.ResetColor();
                 Console.WriteLine(" в заштрихованную область");
             } else {
                 Console.Write("Точка ");
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("не входит");
                 Console.ResetColor();
                 Console.WriteLine(" в заштрихованную область");
             }
-            
+
             // проверка на продолжение
-            Console.WriteLine("1. Продолжить\n2. Закончить\n");
+            Console.WriteLine("————————————————————");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("1. Продолжить\n2. Очистить консоль и продолжить\n3. Закончить\n");
+            Console.ResetColor();
             int input = 0;
             bool ok = true;
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.Write("Команда: ");
             Console.ResetColor();
             do {
                 string buf = Console.ReadLine();
                 ok = int.TryParse(buf, out input);
-                if (input > 2 || input <= 0) ok = false;
+                if (input > 3 || input <= 0)
+                    ok = false;
                 if (!ok) {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine("Такой команды не существует!");
@@ -62,14 +66,20 @@ namespace Task_3 {
                     MainAction();
                     break;
                 case 2:
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("Консоль очищена!");
+                    Console.ResetColor();
+                    MainAction();
+                    break;
+                case 3:
                     Environment.Exit(1);
                     break;
                 default:
                     // additional feature
                     break;
             }
-            
-            
+
         }
 
         /// <summary>

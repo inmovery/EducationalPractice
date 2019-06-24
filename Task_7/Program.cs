@@ -7,15 +7,25 @@ using System.Threading.Tasks;
 namespace Task_7 {
     public class Program {
 
-        private static int print_num = 1;// для вывода номера сочетания
+        private static int print_num = 1; // для вывода номера сочетания
+        private static int[] seq; // все возможные сочетания
+        private static int n = 0; // алфавит от 1 до n
+        private static int k = 0; // длина сочетаний
 
         private static void Main(string[] args) {
-            int[] seq;// все возможные сочетания
-            int n = 0;// алфавит от 1 до n
-            int k = 0;// длина сочетаний
+            MainAction();
+        }
 
-            InputInteger(ref n, "Введите N: ");
-            InputInteger(ref k, "Введите K: ");
+        /// <summary>
+        /// Основные действия программы
+        /// </summary>
+        private static void MainAction() {
+            print_num = 1;
+            n = 0;
+            k = 0;
+
+            InputInteger(ref n, "Введите N (алфивит): ");
+            InputInteger(ref k, "Введите K (длина каждого сочетания): ");
 
             // начальное заполнение массива от 1 до n
             seq = new int[n];
@@ -30,7 +40,51 @@ namespace Task_7 {
             } else {
                 Console.WriteLine("Таких сочетаний нет!");
             }
-            Console.ReadKey();
+
+            // проверка на продолжение
+            Console.WriteLine("————————————————————");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("1. Продолжить\n2. Очистить консоль и продолжить\n3. Закончить\n");
+            Console.ResetColor();
+            int input = 0;
+            bool ok = true;
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write("Команда: ");
+            Console.ResetColor();
+            do {
+                string buf = Console.ReadLine();
+                ok = int.TryParse(buf, out input);
+                if (input > 3 || input <= 0)
+                    ok = false;
+                if (!ok) {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("Такой команды не существует!");
+                    Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write("Команда: ");
+                    Console.ResetColor();
+                }
+            } while (!ok);
+
+            switch (input) {
+                case 1:
+                    MainAction();
+                    break;
+                case 2:
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("Консоль очищена!");
+                    Console.ResetColor();
+                    MainAction();
+                    break;
+                case 3:
+                    Environment.Exit(1);
+                    break;
+                default:
+                    // additional feature
+                    break;
+            }
+
         }
 
         /// <summary>
@@ -52,7 +106,7 @@ namespace Task_7 {
             }
             return false;
         }
-
+        
         /// <summary>
         /// Вывод сочетаний
         /// </summary>
@@ -64,8 +118,7 @@ namespace Task_7 {
             for (int i = 0; i < k; i++)  Console.Write(a[i] + " ");
             Console.Write("\n");
         }
-
-
+        
         /// <summary>
         /// Воод целых данных
         /// </summary>
@@ -81,7 +134,7 @@ namespace Task_7 {
                     ok = false;
                 if (!ok) {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.Write("Неаправильный ввод! Введите снова: ");
+                    Console.Write("Неверный ввод!\nВведите целое число > 0 : ");
                     Console.ResetColor();
                 }
             } while (!ok);
