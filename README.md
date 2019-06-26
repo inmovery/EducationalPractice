@@ -107,14 +107,13 @@ namespace Task_1 {
 ## Задание 2:
 
 ### Задача:
-Определить и вычислить положение и размеры заданных прямоугольников, количество и номера которых задаются пользователем в таблице.
+Известно, что на дне рождения может быть либо M, либо N человек, включая самого именинника. На какое минимальное количество частей ему нужно разрезать торт (не обязательно всех равных), чтобы при любом из указанных количеств собравшихся, все съели торт поровну?
 
 ### Входные данные:
-* 3 целых числа > 0 : N, M и K.
-* N строк по M чисел, каждое из которых соответствует номеру прямоугольника (таблица соответствующая полю N×M клеток).
+* 2 натуральных числа : M, N (безразницы в каком порядке).
 
 ### Выходные данные:
-K строк, каждая из которых описывает соответствующий её номеру прямоугольник, а именно, состоит из координат левого нижнего и правого верхнего углов найденных прямоугольников.
+Искомое минимальное количество кусочков торта (целое число > 0).
 
 <details>
     <summary><u><b>Программный код 2 задания</b></u></summary>
@@ -155,35 +154,125 @@ namespace Task_2 {
 ## Задание 3:
 
 ### Задача:
-Определить и вычислить положение и размеры заданных прямоугольников, количество и номера которых задаются пользователем в таблице.
+Определить, принадлежит ли точка вводимыми пользователем координатами x и y заштрихованной области, представленного на рисунке ниже.
+
+![Рисунок с заштрихованной областью](images_for_git/task_3.jpg)
 
 ### Входные данные:
-* 3 целых числа > 0 : N, M и K.
-* N строк по M чисел, каждое из которых соответствует номеру прямоугольника (таблица соответствующая полю N×M клеток).
+* 2 вещественных числа: координаты X и Y.
 
 ### Выходные данные:
-K строк, каждая из которых описывает соответствующий её номеру прямоугольник, а именно, состоит из координат левого нижнего и правого верхнего углов найденных прямоугольников.
+Информация о попадании: либо "Попадает", либо "Не попадает".
 
 <details>
     <summary><u><b>Главное из программного кода к 3 заданию:</b></u></summary>
     
     ```C#
-        bool y1 = y <= Math.Abs(x);
-        bool y2 = x >= -1;
-        bool y3 = x <= 1;
-        bool y4 = y >= -2;
-        if (y1 && y2 && y3 && y4) {
-            Console.Write("Точка ");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("входит");
-            Console.ResetColor();
-            Console.WriteLine(" в заштрихованную область");
-        } else {
-            Console.Write("Точка ");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("не входит");
-            Console.ResetColor();
-            Console.WriteLine(" в заштрихованную область");
+        using System;
+
+        namespace Task_3 {
+            public class Program {
+                private static void Main(string[] args) { MainAction(); }
+
+                /// <summary>
+                /// Основная задача программы
+                /// </summary>
+                private static void MainAction() {
+
+                    // ввод координат
+                    Console.Write("Введите координату X:");
+                    double x = checkInput();
+                    Console.Write("Введите координату Y:");
+                    double y = checkInput();
+
+                    // ограничения
+                    bool y1 = y <= Math.Abs(x);
+                    bool y2 = x >= -1;
+                    bool y3 = x <= 1;
+                    bool y4 = y >= -2;
+
+                    // вычисление результата
+                    if (y1 && y2 && y3 && y4) {
+                        Console.Write("Точка ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write("входит");
+                        Console.ResetColor();
+                        Console.WriteLine(" в заштрихованную область");
+                    } else {
+                        Console.Write("Точка ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("не входит");
+                        Console.ResetColor();
+                        Console.WriteLine(" в заштрихованную область");
+                    }
+
+                    // проверка на продолжение
+                    Console.WriteLine("————————————————————");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("1. Продолжить\n2. Очистить консоль и продолжить\n3. Закончить\n");
+                    Console.ResetColor();
+                    int input = 0;
+                    bool ok = true;
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.Write("Команда: ");
+                    Console.ResetColor();
+                    do {
+                        string buf = Console.ReadLine();
+                        ok = int.TryParse(buf, out input);
+                        if (input > 3 || input <= 0)
+                            ok = false;
+                        if (!ok) {
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("Такой команды не существует!");
+                            Console.ResetColor();
+                            Console.ForegroundColor = ConsoleColor.Magenta;
+                            Console.Write("Команда: ");
+                            Console.ResetColor();
+                        }
+                    } while (!ok);
+
+                    switch (input) {
+                        case 1:
+                            MainAction();
+                            break;
+                        case 2:
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.WriteLine("Консоль очищена!");
+                            Console.ResetColor();
+                            MainAction();
+                            break;
+                        case 3:
+                            Environment.Exit(1);
+                            break;
+                        default:
+                            // additional feature
+                            break;
+                    }
+
+                }
+
+                /// <summary>
+                /// Проверка на ввод координат
+                /// </summary>
+                /// <returns></returns>
+                private static double checkInput() {
+                    bool ok = true;
+                    double result;
+                    do {
+                        string text = Console.ReadLine();
+                        ok = double.TryParse(text, out result);
+                        if (!ok) {
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("Вы ввели некорректные данные!");
+                            Console.Write("Введите действительное число : ");
+                            Console.ResetColor();
+                        }
+                    } while (!ok);
+                    return result;
+                }
+
+            }
         }
     ```
 </details>
