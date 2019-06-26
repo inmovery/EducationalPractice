@@ -168,6 +168,7 @@ namespace Task_2 {
     <summary><u><b>Главное из программного кода к 3 заданию:</b></u></summary>
     
     ```C#
+    
         using System;
 
         namespace Task_3 {
@@ -274,6 +275,7 @@ namespace Task_2 {
 
             }
         }
+        
     ```
 </details>
 
