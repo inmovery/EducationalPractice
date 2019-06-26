@@ -16,6 +16,7 @@ K строк, каждая из которых описывает соответ
 
 <details>
 <summary>Программный код 1 задания</summary>
+    
 ```C#
 using System;
 using System.IO;
