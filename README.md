@@ -92,3 +92,4 @@ namespace Task_1 {
 }
 ```
 </details>
+[:arrow_up:Оглавление](#Оглавление)
